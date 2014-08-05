@@ -6,6 +6,7 @@ mongodb.MongoClient.connect('mongodb://localhost:27017/rna', function(err, datab
         throw err;
 
     db = database;
+    process.emit('dbready');
 });
 
 function Functional(){
