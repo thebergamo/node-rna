@@ -1,5 +1,6 @@
-var ouvir = require(__dirname +'/neuronios/ouvir')(process.argv);
+var ouvir = require(__dirname +'/neuronios/ouvir');
 var somar = require(__dirname +'/neuronios/somar');
+var informacao = require(__dirname +'/neuronios/informacao');
 var armazenar = require(__dirname +'/neuronios/armazenar');
 
 /*
@@ -7,10 +8,16 @@ var armazenar = require(__dirname +'/neuronios/armazenar');
     estrutura da frase: VERBO + AÇÃO ESPERADA
     Exemplo: SOME 1 + 1 ou DIVIDA 10 / 5
 */
-var resposta = somar(ouvir);
-if(resposta == false)
-    console.log('Infelizmente sei apenas realizar operações de soma. :(');
 
-armazenar(ouvir, resposta);
+// Só começa a processar depois do dbready
+process.on('dbready', function(){
+    ouvir(process.argv);
 
-console.log(resposta);
+    var resposta = somar();
+    if(resposta == false)
+        console.log('Infelizmente sei apenas realizar operações de soma. :(');
+
+    armazenar(ouvir, resposta);
+
+    console.log(resposta);
+});
