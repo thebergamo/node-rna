@@ -20,7 +20,9 @@ module.exports = function(expression, answer){
     informacao.collection('expressions').update({verb: verbo},
             {$push: {expression: dado}},
             { upsert: true }, function(err){
-        if(err)
+        if(err){
+            console.log(err);
             console.log('Infelizmente não consegui guardar essa informação :(');
-    })
+        }
+    });
 }

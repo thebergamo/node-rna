@@ -11,13 +11,14 @@ var armazenar = require(__dirname +'/neuronios/armazenar');
 
 // Só começa a processar depois do dbready
 process.on('dbready', function(){
-    ouvir(process.argv);
+    var expression = ouvir(process.argv);
 
-    var resposta = somar();
+    var resposta = somar(expression);
     if(resposta == false)
         console.log('Infelizmente sei apenas realizar operações de soma. :(');
 
-    armazenar(ouvir, resposta);
+    armazenar(expression, resposta);
 
     console.log(resposta);
+    process.exit(0);
 });
